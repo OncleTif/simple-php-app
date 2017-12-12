@@ -1,0 +1,16 @@
+sudo: required
+
+language: ruby
+
+services:
+    - docker
+
+before_install:
+    - docker build -t tifman/simple-php-app-front .
+
+script:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+      docker push tifman/simple-php-app-front;
+      fi
